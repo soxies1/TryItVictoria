@@ -1,0 +1,10 @@
+.main{
+    width:800px;
+    margin: 0 auto;
+    background-color: #EEEEEE;
+    height:100%;
+}
+
+.main h2{
+    text-align: center;
+}

@@ -1,0 +1,29 @@
+{
+  "name": "tryitvictoria",
+  "version": "1.0.0",
+  "description": "A web app to try free things in victoria",
+  "main": "app.js",
+  "dependencies": {
+    "body-parser": "^1.15.0",
+    "ejs": "^2.4.1",
+    "elasticsearch": "^10.1.3",
+    "express": "^4.13.4",
+    "express-session": "^1.13.0",
+    "passport": "^0.3.2",
+    "passport-auth0": "^0.5.1"
+  },
+  "devDependencies": {},
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/soxies1/TryItVictoria.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/soxies1/TryItVictoria/issues"
+  },
+  "homepage": "https://github.com/soxies1/TryItVictoria#readme"
+}
