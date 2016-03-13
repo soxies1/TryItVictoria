@@ -7,6 +7,8 @@ var client = new elasticsearch.Client({ // define the location of out elasticsea
 
 function createPost(req) {
     var postText = escapeHtml(req.body.text);
+    var imglink = escapeHtml(req.body.link);
+    var infolink = escapeHtml(req.body.infolink);
     var user = req.user.nickname;
     var date = new Date();
     var post = {
@@ -14,6 +16,8 @@ function createPost(req) {
         timestamp: date,
         text: postText,
         length: postText.length,
+        imglink : imglink,
+        infolink : infolink
     }
     return post;
 }
@@ -49,7 +53,9 @@ function getRecentPosts(callback) {
                     text: data[i]._source.text,
                     user: data[i]._source.user,
                     timestamp: data[i]._source.timestamp,
-                    length: data[i]._source.length
+                    length: data[i]._source.length,
+                    imglink: data[i]._source.imglink,
+                    infolink: data[i]._source.infolink
                 })
             }
             callback(err, posts);
@@ -71,7 +77,9 @@ function initESIndex() {
                     text: 'hello world!',
                     timestamp: new Date(),
                     user: 'tysonbulmer',
-                    length: 10
+                    length: 10,
+                    imglink: '',
+                    infolink: ''
                 }
             }, function(err, res) {
                 if (err) {

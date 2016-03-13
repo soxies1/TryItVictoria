@@ -7,14 +7,25 @@
     <body>
         <div class="main">
             <h2>Try It Victoria</h2>
+                    <script src="https://cdn.auth0.com/js/lock-8.2.min.js"></script>
+<script type="text/javascript">
+  
+var lock = new Auth0Lock('YD5Iawk9EdB1VzZKYSSzNdkzxnzWLRe1', 'tysonbulmer.auth0.com');
+  
+  
+  function signin() {
+    lock.show({
+        callbackURL: window.location.href + 'callback',
+        responseType: 'code',
+        authParams: {
+        scope: 'openid profile'
+      }
+    });
+  }
+</script>
             <button onclick="window.signin();" class="login">Login/Sign up</button>
        
         </div>
-        
-        
-        
-        
-        
         
         <script src="https://cdn.auth0.com/js/lock-8.2.min.js"></script>
 <script type="text/javascript">
@@ -34,6 +45,5 @@
 </script>
 
     <script type="text/javascript" src="https://code.jquery.com/jquery-2.2.1.min.js"></script>
-    <script type="text/javascript" src="js/control.js"></script>
     </body>
 </html>

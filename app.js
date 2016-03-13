@@ -3,8 +3,9 @@ var bodyParser = require('body-parser');
 
 var passport = require('passport');
 var strategy = require('./auth/setup-passport')
-
+var cookieParser = require('cookie-parser');
 var session = require('express-session');
+
 
 var path = require('path');  
 
@@ -12,6 +13,13 @@ var postHelper = require('./helpers/posts');
 
 var app = express();
 var PORT = 3000;
+
+app.use(cookieParser());
+app.use(session({                       // Used to track user session
+        secret: "ASECRETCODEGOESHERE",
+        resave: true,
+        saveUninitialized: true
+    }));
 
 app.set('view engine', 'ejs');
 
@@ -39,28 +47,35 @@ postHelper.initESIndex();
 
 
 //Routes
-app.get('/', function(req, res) {
-    if (!req.isAuthenticated()) {
+/*app.get('/', function(req, res) {
+    //if (!req.isAuthenticated()) {
             res.sendFile(path.join(__dirname, 'views/signin.html'));
         //res.sendFile(path.join(__dirname, 'views/index.html'));
-    }
-    else {
-        res.redirect('/main');
-    }
-});
+    //}
+    //else {
+    //    res.redirect('/main');
+    //}
+});*/
 
-app.get('/main', function(req, res){
-    if (!req.isAuthenticated()) {
-        res.redirect('/');
-    }else{
+app.get('/', function(req, res){
+   // if (!req.isAuthenticated()) {
+    //    res.redirect('/');
+    //}else{
+        var signedIn = true;
+        if (!req.isAuthenticated()) {
+            signedIn = false;
+        }
+        
         postHelper.getRecentPosts(function(err, posts){
 
             if(err) console.log(err);
             res.render(path.join(__dirname, 'views/main.ejs'), 
-            {  posts: posts }
+            {  posts: posts,
+               signedIn : signedIn
+             }
             );
         });
-    }
+    //}
 });
 
 app.post('/newpost', function(req, res){
@@ -72,6 +87,19 @@ app.post('/newpost', function(req, res){
         var status = postHelper.savePost(post);
         res.status(status);
     }
+});
+
+app.get('/makepost', function(req, res){
+    var signedIn = true;
+    if(!req.isAuthenticated()){
+        signedIn = false;
+    }
+        
+    res.render(path.join(__dirname, 'views/create.ejs'),
+    {
+        signedIn : signedIn
+    });
+    
 });
 
 // route handler for our auth callback
@@ -86,11 +114,18 @@ app.get('/callback',
 
             if(err) console.log(err);
             res.render(path.join(__dirname, 'views/main.ejs'), 
-            {  posts: posts }
+            {  posts: posts,
+               signedIn : true
+                }
             );
         });
         }
     });
+    
+    // route to handle when logins go wrong
+app.get('/failure', function(req, res) {
+    res.sendFile(path.join(__dirname, 'views/failure.html'));
+});
    
 
 app.listen(PORT, function() {

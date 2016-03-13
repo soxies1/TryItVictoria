@@ -1,0 +1,29 @@
+<nav>
+
+    <ul class="nav navbar-nav">
+        <li><a href="/">Home</a></li>
+        <li><a href="#">Sign In</a></li>
+        <% if (!signedIn) { %>
+        <li><button onclick="window.signin();" class="login">Login/Sign up</button> to create a post</li>
+        <% } %>
+        <% if (signedIn) { %>
+        <li><a href="makepost">Create Post</a></li>
+        <% } %>
+    </ul>
+       <script src="https://cdn.auth0.com/js/lock-8.2.min.js"></script>
+<script type="text/javascript">
+  
+  var lock = new Auth0Lock('YD5Iawk9EdB1VzZKYSSzNdkzxnzWLRe1', 'tysonbulmer.auth0.com');
+  
+  
+  function signin() {
+    lock.show({
+        callbackURL: window.location.href + 'callback',
+        responseType: 'code',
+        authParams: {
+        scope: 'openid profile'
+      }
+    });
+  }
+</script>
+</nav>

@@ -2,48 +2,38 @@
     <head>
     <link rel="stylesheet" href="css/style.css">
     <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/skeleton/2.0.4/skeleton.min.css">
-   
+    <% include ./partials/head %>
     </head>
     <body>
+    <% include ./partials/nav %>
+    
         <div class="main">
             <h2>Try It Victoria</h2>
             <section>
                 <h4>Posts:</h4>
                 <% for(var i in posts) {%>
-            <%= posts[i].user + ' ' %> <%= posts[i].timestamp%>
-            <p><%= posts[i].text %></p>
+                
+                <% if(! (posts[i].imglink == '' || typeof posts[i].imglink === "undefined")) { %>
+                    <img class="thumb" src='<%= posts[i].imglink %>'> 
+                <% } else {%>
+                    <img class="thumb" src="http://epaper2.mid-day.com/images/no_image_thumb.gif">
+                <% } %>
+                
+                <% if(! (posts[i].infolink == '' || typeof posts[i].infolink === "undefined")) { %>
+                    <p>More info at: <a  href='<%= posts[i].infolink %>'><%= posts[i].infolink %></a></p>
+                <% } else { %>
+                    <p></p>
+                <% } %>
+            <%= posts[i].user + ' ' %>  <%= posts[i].timestamp%>
+            <p>Description: <%= posts[i].text %></p>
             <% } %>
             
             </section>
-            <section>
-                <h4>Make A Post:</h4>
-                <textarea class="form-control col-md-8" rows="3" id="postarea"></textarea><button class="btn btn-default" id="post-btn">Post!</button>
-                
-            </section>
+            
             
         </div>
         
-        
-        <button onclick="window.signin();" class="login">Login/Sign up</button>
-        
-        
-        
-        <script src="https://cdn.auth0.com/js/lock-8.2.min.js"></script>
-<script type="text/javascript">
-  
-  var lock = new Auth0Lock('YD5Iawk9EdB1VzZKYSSzNdkzxnzWLRe1', 'tysonbulmer.auth0.com');
-  
-  
-  function signin() {
-    lock.show({
-        callbackURL: window.location.href + 'callback',
-        responseType: 'code',
-        authParams: {
-        scope: 'openid profile'
-      }
-    });
-  }
-</script>
+    
 
     <script type="text/javascript" src="https://code.jquery.com/jquery-2.2.1.min.js"></script>
     <script type="text/javascript" src="js/control.js"></script>
