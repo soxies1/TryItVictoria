@@ -89,7 +89,7 @@ function createPostHtml(post) {
         htmlstring += "</a";
     }
     
-    htmlstring += "<p class=\"post-meta\">" + post.user + " " + post.timestamp.substring(0,10) + "</p></div><hr>";
+    htmlstring += "<p class=\"post-meta\">" + post.user + " Posted on: " + post.timestamp.substring(0,10) + "</p></div><hr>";
     
     return htmlstring;
 }
