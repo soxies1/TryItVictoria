@@ -60,11 +60,20 @@ function getRecentPosts(callback) {
                     eventdate = '';
                 } else{
                     eventdate = data[i]._source.eventdate.substring(0,10);
+                    var curr = new Date().toISOString().split('T')[0];
+                    if (curr > eventdate){
+                        //cleanup(data[i]._source.id);
+                        continue;
+                    }
                 }
+                
+                if(eventdate == '') continue;
+                if(data[i]._source.text == "hello world!") continue;
+                
                 posts.push({
                     text: data[i]._source.text,
                     user: data[i]._source.user,
-                    timestamp: data[i]._source.timestamp,
+                    timestamp: data[i]._source.timestamp.substring(0,10),
                     length: data[i]._source.length,
                     imglink: data[i]._source.imglink,
                     infolink: data[i]._source.infolink,
@@ -78,7 +87,6 @@ function getRecentPosts(callback) {
 }
 
 function getPaginatedRecentPosts(page, callback) {
-
     client.search({
         index: 'tryit1',
         type: 'posts',
@@ -96,11 +104,17 @@ function getPaginatedRecentPosts(page, callback) {
                     eventdate = '';
                 } else{
                     eventdate = data[i]._source.eventdate.substring(0,10);
+                    var curr = new Date().toISOString().split('T')[0];
+                    if (curr > eventdate){
+                        //cleanup(data[i]._source.id);
+                        continue;
+                    }
                 }
+                
                 posts.push({
                     text: data[i]._source.text,
                     user: data[i]._source.user,
-                    timestamp: data[i]._source.timestamp,
+                    timestamp: data[i]._source.timestamp.substring(0,10),
                     length: data[i]._source.length,
                     imglink: data[i]._source.imglink,
                     infolink: data[i]._source.infolink,

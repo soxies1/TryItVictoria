@@ -122,7 +122,7 @@ app.get('/callback',
         }
     });
     
-app.get('/:page', function (req, res) {
+app.get('/more/:page', function (req, res) {
     /*var signedIn = true;
     if(!req.isAuthenticated()){
         signedIn = false;

@@ -36,7 +36,7 @@
                 <% if(! (posts[i].imglink == '' || typeof posts[i].imglink === "undefined")) { %>
                     <img class="thumb" src='<%= posts[i].imglink %>'> 
                 <% } else {%>
-                    <img class="thumb" src="http://epaper2.mid-day.com/images/no_image_thumb.gif">
+                    <img class="thumb" src="img/fill.jpg">
                 <% } %>
                 
                 <% if(! (posts[i].title == '' || typeof posts[i].title === "undefined")) { %>
@@ -66,8 +66,8 @@
             <!-- Pager -->
                 <ul class="pager">
                     <li class="next">
-                        <a href="#">Older Posts &rarr;</a>
                         <button id="loadmoreposts">More Posts</button>
+                        <button class="btn btn-default" id="post-btn" style="display:none;">Send</button>
                     </li>
                 </ul>
         </div>

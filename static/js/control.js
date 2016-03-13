@@ -11,16 +11,7 @@ var morebtn = document.getElementById('loadmoreposts');
 
 var currentPage = 1;
 
-morebtn.onclick = function() {
-    $.get('/' + currentPage)
-    .success(function(data) {
-            var posts = data.posts;
-            for (var i in posts) {
-                postholder.innerHTML += createPostHtml(posts[i]);
-            }
-            currentPage += 1;
-        });
-}
+
 
 
 postSubmit.onclick = function() {
@@ -63,13 +54,23 @@ postSubmit.onclick = function() {
     eventdateel.value = '2016-03-12';
 }
 
+morebtn.onclick = function() {
+    $.get('/more/' + currentPage)
+    .success(function(data) {
+            var posts = data.posts;
+            for (var i in posts) {
+                postholder.innerHTML += createPostHtml(posts[i]);
+            }
+            currentPage += 1;
+        });
+}
 
 
 
 function createPostHtml(post) {
     var htmlstring = '<div class="post-preview">';
     if(post.imglink == '' || post.imglink == "undefined"){
-        htmlstring += '<img class="thumb" src="http://epaper2.mid-day.com/images/no_image_thumb.gif">';
+        htmlstring += '<img class="thumb" src="img/fill.jpg">';
     }else{
         htmlstring += "<img class=\"thumb\" src='" + post.imglink + "'>";
     }

@@ -20,7 +20,7 @@
                         <a href="/">Home</a>
                     </li>
                     <% if (!signedIn) { %>
-                        <li><button onclick="window.signin();" class="login">Login/Sign up</button> to create a post</li>
+                        <li><a onclick="window.signin();" id="login">Login/Sign up to create a post</a></li>
                     <% } %>
                     <% if (signedIn) { %>
                         <li><a href="makepost">Create Post</a></li>
