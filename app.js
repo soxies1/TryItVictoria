@@ -69,7 +69,7 @@ app.get('/', function(req, res){
         postHelper.getRecentPosts(function(err, posts){
 
             if(err) console.log(err);
-            res.render(path.join(__dirname, 'views/main.ejs'), 
+            res.render(path.join(__dirname, 'views/index.ejs'), 
             {  posts: posts,
                signedIn : signedIn
              }
@@ -113,7 +113,7 @@ app.get('/callback',
             postHelper.getRecentPosts(function(err, posts){
 
             if(err) console.log(err);
-            res.render(path.join(__dirname, 'views/main.ejs'), 
+            res.render(path.join(__dirname, 'views/index.ejs'), 
             {  posts: posts,
                signedIn : true
                 }
@@ -121,6 +121,18 @@ app.get('/callback',
         });
         }
     });
+    
+app.get('/:page', function (req, res) {
+    /*var signedIn = true;
+    if(!req.isAuthenticated()){
+        signedIn = false;
+    }*/
+    var page = parseInt(req.params.page);
+    
+    postHelper.getPaginatedRecentPosts(page, function(err, posts){
+        res.send({posts : posts});
+    });
+});
     
     // route to handle when logins go wrong
 app.get('/failure', function(req, res) {

@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <% include ./partials/head %>
+
+</head>
+
+<body>
+    <% include ./partials/nav %>
+
+    <!-- Page Header -->
+    <!-- Set your background image for this header on the line below. -->
+    <header class="intro-header" style="background-image: url('https://upload.wikimedia.org/wikipedia/commons/8/8a/2009-0605-Victoria-Harbor-PAN.JPG')">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+                    <div class="site-heading" style="padding-top:40px; padding-bottom:160px;">
+                        <h1>TryIt Victoria</h1>
+                        <hr class="small">
+                        <span class="subheading">Find and try free things in Victoria!</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <!-- Main Content -->
+    <div class="container" style="margin-top: -150px; background-color: rgba(253,253,253,1);">
+        <div class="row">
+            <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1" id="postholder">
+                
+                <% for(var i in posts) {%>
+                <div class="post-preview">
+                <% if(! (posts[i].imglink == '' || typeof posts[i].imglink === "undefined")) { %>
+                    <img class="thumb" src='<%= posts[i].imglink %>'> 
+                <% } else {%>
+                    <img class="thumb" src="http://epaper2.mid-day.com/images/no_image_thumb.gif">
+                <% } %>
+                
+                <% if(! (posts[i].title == '' || typeof posts[i].title === "undefined")) { %>
+                    <% if(! (posts[i].infolink == '' || typeof posts[i].infolink === "undefined")) { %>
+                        <a  href='<%= posts[i].infolink %>' target="_blank">
+                    <% } %>
+                    <h5 class="post-title"><%= posts[i].title %></h5> <span class="date"><%= posts[i].eventdate%></span>
+                    
+                <% } else { %>
+                    
+                <% } %>
+                
+                <p class="post-subtitle"><%= posts[i].text %></p>
+                <% if(! (posts[i].infolink == '' || typeof posts[i].infolink === "undefined")) { %>
+                </a>
+                <% } %>
+                
+                <p class="post-meta"><%= posts[i].user + ' ' %>  <%= posts[i].timestamp%></p>
+                
+                </div>
+                <hr>
+            <% } %>
+            
+            
+                
+            </div>
+            <!-- Pager -->
+                <ul class="pager">
+                    <li class="next">
+                        <a href="#">Older Posts &rarr;</a>
+                        <button id="loadmoreposts">More Posts</button>
+                    </li>
+                </ul>
+        </div>
+    </div>
+
+  <% include ./partials/footer %>
+
+</body>
+
+</html>

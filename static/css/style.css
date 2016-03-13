@@ -5,6 +5,10 @@
     height:100%;
 }
 
+p{
+    padding:5px 10px;
+}
+
 .main h2{
     text-align: center;
 }
@@ -12,4 +16,41 @@
 .thumb{
     width:120px;
     height:120px;
+    float:right;
+}
+
+.post-content{
+    width:100%;
+    border: 1px solid black;
+    
+}
+
+.post-content img{
+    float:right;
+}
+
+.post-content p{
+    float: left;
+}
+
+.post-title{
+    
+}
+
+.description{
+    
+}
+
+.moreinfo{
+    
+}
+
+.timestamp{
+    font-size:12px;
+    padding-left: 10px;
+}
+
+#eventdate{
+    font-size: 21px;
+    color: #999;
 }

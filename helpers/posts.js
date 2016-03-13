@@ -9,6 +9,9 @@ function createPost(req) {
     var postText = escapeHtml(req.body.text);
     var imglink = escapeHtml(req.body.link);
     var infolink = escapeHtml(req.body.infolink);
+    var title = escapeHtml(req.body.title);
+    var eventdate = new Date(req.body.eventdate);
+    console.log(eventdate);
     var user = req.user.nickname;
     var date = new Date();
     var post = {
@@ -17,14 +20,16 @@ function createPost(req) {
         text: postText,
         length: postText.length,
         imglink : imglink,
-        infolink : infolink
+        infolink : infolink,
+        title: title,
+        eventdate: eventdate
     }
     return post;
 }
 
 function savePost(post) {
     client.index({
-        index: 'tryit',
+        index: 'tryit1',
         type: 'posts',
         body: post
     }, function(err, res) {
@@ -40,23 +45,68 @@ function savePost(post) {
 
 function getRecentPosts(callback) {
     client.search({
-        index: 'tryit',
+        index: 'tryit1',
         type: 'posts',
-        sort: 'timestamp:desc'
+        sort: 'eventdate:asc',
+        size: 10
     }, function(err, res) {
         if (err) console.error(err);
         else {
             var posts = [];
             var data = res.hits.hits;
             for (var i in data) {
+                var eventdate = data[i]._source.eventdate;
+                if(data[i]._source.eventdate == null){
+                    eventdate = '';
+                } else{
+                    eventdate = data[i]._source.eventdate.substring(0,10);
+                }
                 posts.push({
                     text: data[i]._source.text,
                     user: data[i]._source.user,
                     timestamp: data[i]._source.timestamp,
                     length: data[i]._source.length,
                     imglink: data[i]._source.imglink,
-                    infolink: data[i]._source.infolink
+                    infolink: data[i]._source.infolink,
+                    title: data[i]._source.title,
+                    eventdate: eventdate
                 })
+            }
+            callback(err, posts);
+        }
+    });
+}
+
+function getPaginatedRecentPosts(page, callback) {
+
+    client.search({
+        index: 'tryit1',
+        type: 'posts',
+        sort: 'eventdate:asc',
+        from: page * 10,
+        size: 10
+    }, function(err, res) {
+        if (err) console.error(err);
+        else {
+            var posts = [];
+            var data = res.hits.hits;
+            for (var i in data) {
+                var eventdate = data[i]._source.eventdate;
+                if(data[i]._source.eventdate == null){
+                    eventdate = '';
+                } else{
+                    eventdate = data[i]._source.eventdate.substring(0,10);
+                }
+                posts.push({
+                    text: data[i]._source.text,
+                    user: data[i]._source.user,
+                    timestamp: data[i]._source.timestamp,
+                    length: data[i]._source.length,
+                    imglink: data[i]._source.imglink,
+                    infolink: data[i]._source.infolink,
+                    title: data[i]._source.title,
+                    eventdate: eventdate
+                });
             }
             callback(err, posts);
         }
@@ -65,13 +115,13 @@ function getRecentPosts(callback) {
 
 function initESIndex() {
     client.search({
-        index: 'tryit',
+        index: 'tryit1',
         type: 'posts',
         sort: 'timestamp:desc'
     }, function(err, res) {
         if (err) {
             client.index({
-                index: 'tryit',
+                index: 'tryit1',
                 type: 'posts',
                 body: {
                     text: 'hello world!',
@@ -79,14 +129,16 @@ function initESIndex() {
                     user: 'tysonbulmer',
                     length: 10,
                     imglink: '',
-                    infolink: ''
+                    infolink: '',
+                    title: '',
+                    eventdate: '2016-03-13T03:45:52.727Z'
                 }
             }, function(err, res) {
                 if (err) {
                     console.error(err);
                     return 500;
                 } else {
-                    console.log("Successfully inserted chirp!");
+                    console.log("Successfully inserted post");
                     return 200;
                 }
             })
@@ -99,6 +151,6 @@ module.exports = {
     savePost: savePost,
     getRecentPosts: getRecentPosts,
     //getUserChirps: getUserChirps,
-    initESIndex: initESIndex
-    //getPaginatedRecentChirps: getPaginatedRecentChirps
+    initESIndex: initESIndex,
+    getPaginatedRecentPosts: getPaginatedRecentPosts
 }

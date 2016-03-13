@@ -1,0 +1,32 @@
+<html>
+    <head>
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/skeleton/2.0.4/skeleton.min.css">
+    <% include ./partials/head %>
+    </head>
+    <body>
+    <% include ./partials/nav %>
+    
+        <div class="main">
+            <h2>Try It Victoria</h2>
+          
+            <section>
+                <h4>Make A Post:</h4>
+                <p>Title:</p>
+                <textarea id="title"></textarea>
+                <p>Image address:</p>
+                <textarea id="postimglink"></textarea>
+                <p>More info link:</p>
+                <textarea id="infolink"></textarea>
+                <p>Description:</p>
+                <textarea class="form-control col-md-8" rows="3" id="postarea"></textarea><button class="btn btn-default" id="post-btn">Post!</button>
+                
+            </section>
+            
+        </div>
+        
+
+    <script type="text/javascript" src="https://code.jquery.com/jquery-2.2.1.min.js"></script>
+    <script type="text/javascript" src="js/control.js"></script>
+    </body>
+</html>

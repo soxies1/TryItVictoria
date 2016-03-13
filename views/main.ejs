@@ -12,29 +12,43 @@
             <section>
                 <h4>Posts:</h4>
                 <% for(var i in posts) {%>
-                
+                <div class="row post-content">
                 <% if(! (posts[i].imglink == '' || typeof posts[i].imglink === "undefined")) { %>
                     <img class="thumb" src='<%= posts[i].imglink %>'> 
                 <% } else {%>
                     <img class="thumb" src="http://epaper2.mid-day.com/images/no_image_thumb.gif">
                 <% } %>
                 
-                <% if(! (posts[i].infolink == '' || typeof posts[i].infolink === "undefined")) { %>
-                    <p>More info at: <a  href='<%= posts[i].infolink %>'><%= posts[i].infolink %></a></p>
+                <% if(! (posts[i].title == '' || typeof posts[i].title === "undefined")) { %>
+                    <p> <h5 class="post-title"><%= posts[i].title %></h5>
+                    </p>
                 <% } else { %>
                     <p></p>
                 <% } %>
-            <%= posts[i].user + ' ' %>  <%= posts[i].timestamp%>
-            <p>Description: <%= posts[i].text %></p>
+                
+                <p class="description">Description: <%= posts[i].text %></p>
+                
+                
+                <% if(! (posts[i].infolink == '' || typeof posts[i].infolink === "undefined")) { %>
+                    <p class="moreinfo">More info at: <a  href='<%= posts[i].infolink %>'><%= posts[i].infolink %></a></p>
+                <% } else { %>
+                    <p></p>
+                <% } %>
+              
+                
+                <span class="timestamp"><%= posts[i].user + ' ' %>  <%= posts[i].timestamp%></span>
+                
+                </div>
+            
+            
+            
             <% } %>
+            
             
             </section>
             
-            
         </div>
-        
-    
-
+       
     <script type="text/javascript" src="https://code.jquery.com/jquery-2.2.1.min.js"></script>
     <script type="text/javascript" src="js/control.js"></script>
     </body>
